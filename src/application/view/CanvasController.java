@@ -39,7 +39,7 @@ public class CanvasController {
 
 	//happens when the canvas starts
 	@FXML
-	public void initialize(){
+	public void initialize(){ //creates the canvas, makes an array to store the dots, and designates a placeholder dot to allow drawing
 		createCanvas();
 		dots = new DotArray((int) canvas.getWidth(), (int) canvas.getHeight());
 		currentDot = new SolidDot(0, 0, Color.BLUE, this);
@@ -49,15 +49,10 @@ public class CanvasController {
 	public void createCanvas(){
 		//this.width.set(width);
 		//this.height.set(height);
-		setCanvasSize();
-		fillWhite();
+		//setCanvasSize();
+		//fillWhite();
 		graphicsContext = canvas.getGraphicsContext2D();
-		initDraw(graphicsContext);
-	}
-
-	//creates all the stuff it needs to draw
-	public void initDraw(GraphicsContext gc){
-		gc.setLineWidth(1.0);
+		graphicsContext.setLineWidth(1.0);
 	}
 
 	//draw when the mouse is just clicked
@@ -73,13 +68,13 @@ public class CanvasController {
 	public void mouseDragged(MouseEvent event){
 		mouseDragEndX = (int) event.getX();
 		mouseDragEndY = (int) event.getY();
-		
+
 		int startX = mouseDragStartX;
 		int endX = mouseDragEndX;
 		int startY = mouseDragStartY;
 		int endY = mouseDragEndY;
-		
-		boolean steep = Math.abs(endY - startY) > Math.abs(endX - startX); //this big algorithm didn't work but what it made instead looked real cool so i'm keeping it for possible use later
+
+		boolean steep = Math.abs(endY - startY) > Math.abs(endX - startX);
 	    if (steep) {
 	        int t;
 	        // swap(x0, y0);
@@ -128,27 +123,24 @@ public class CanvasController {
 	    }
 	    mouseDragStartX = mouseDragEndX;
 	    mouseDragStartY = mouseDragEndY;
-		//graphicsContext.lineTo(event.getX(), event.getY());
-		//graphicsContext.stroke();*/
 	}
 
+	//called by a dot to draw on the canvas
 	public void drawDot(int x, int y, Color color){
 		graphicsContext.setStroke(color);
 		graphicsContext.strokeLine(x + 0.5, y + 0.5, x + 0.5, y + 0.5);
-		//graphicsContext.strokeLine(x + 1.5, y + 1.5, x + 0.5, y + 0.5);
-		//graphicsContext.stroke();
 
 	}
 
+	//might be how the canvas gets its size when it's first initialized
 	public void setCanvasSize(){
 
 	}
 
+	//set the background of the canvas to white, eventually
 	public void fillWhite(){
 
 	}
-
-	public void setMainApp(){}
 
 }
 

@@ -16,6 +16,7 @@ public class Main extends Application{
 	private AnchorPane menu;
 	private AnchorPane canvas;
 
+	//creates all the windows that the program runs in
 	@Override
 	public void start(Stage primaryStage){
 		this.primaryStage = primaryStage;
@@ -36,7 +37,7 @@ public class Main extends Application{
 
 	public void initCanvas(){
 		try{
-			//load the FXML
+			//load this FXML
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(Main.class.getResource("view/CanvasArea.fxml"));
 			canvas = loader.load();
@@ -63,7 +64,7 @@ public class Main extends Application{
 			loader.setLocation(Main.class.getResource("view/MenuBarWindow.fxml"));
 			menu = loader.load();
 
-			//make it the stage and show that thing
+			//make it the stage and show the stage
 			Scene scene = new Scene(menu);
 			primaryStage.setScene(scene);
 			primaryStage.show();
