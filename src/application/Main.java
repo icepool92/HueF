@@ -20,41 +20,13 @@ public class Main extends Application{
 	@Override
 	public void start(Stage primaryStage){
 		this.primaryStage = primaryStage;
-		this.primaryStage.setTitle("Drôr");
+		this.primaryStage.setTitle("HueF");
 
 		initMenu();
-		initCanvas();
-		drawToCanvas();
-	}
-
-	public void drawToCanvas(){
-
 	}
 
 	public static void main(String[] args){
 		launch(args);
-	}
-
-	public void initCanvas(){
-		try{
-			//load this FXML
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource("view/CanvasArea.fxml"));
-			canvas = loader.load();
-
-			//this lets the canvas co-exist with the menu(?)
-			canvasStage = new Stage();
-			canvasStage.setTitle("Canvas");
-			canvasStage.initModality(Modality.NONE);
-			canvasStage.initOwner(primaryStage);
-
-			//make that canvas
-			Scene scene = new Scene(canvas);
-			canvasStage.setScene(scene);
-			canvasStage.show();
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void initMenu(){

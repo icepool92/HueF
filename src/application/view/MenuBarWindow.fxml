@@ -8,15 +8,15 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="menuWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.MenuBarWindowController">
+<AnchorPane fx:id="menuWindow" maxHeight="25.0" maxWidth="188.0" minHeight="25.0" minWidth="188.0" prefHeight="25.0" prefWidth="188.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.MenuBarWindowController">
    <children>
       <MenuBar>
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem id="createNew" fx:id="createNew" mnemonicParsing="false" onAction="#checkNewDisabled" text="New..." />
+              <MenuItem id="createNew" fx:id="createNew" mnemonicParsing="false" onAction="#createNewPressed" text="New..." />
                   <MenuItem fx:id="open" mnemonicParsing="false" text="Open..." />
-                  <MenuItem fx:id="save" disable="true" mnemonicParsing="false" text="Save..." />
+                  <MenuItem fx:id="save" disable="true" mnemonicParsing="false" onAction="#savePressed" text="Save..." />
                   <MenuItem fx:id="export" disable="true" mnemonicParsing="false" text="Export..." />
             </items>
           </Menu>

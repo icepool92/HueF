@@ -39,20 +39,17 @@ public class CanvasController {
 
 	//happens when the canvas starts
 	@FXML
-	public void initialize(){ //creates the canvas, makes an array to store the dots, and designates a placeholder dot to allow drawing
-		createCanvas();
-		dots = new DotArray((int) canvas.getWidth(), (int) canvas.getHeight());
-		currentDot = new SolidDot(0, 0, Color.BLUE, this);
-	}
+	public void initialize(){}
 
 	//makes the canvas, pass in width and height //eventually
-	public void createCanvas(){
-		//this.width.set(width);
-		//this.height.set(height);
-		//setCanvasSize();
-		//fillWhite();
+	public void createCanvas(int h, int w){
+		canvas.setWidth(w);
+		canvas.setHeight(h);
+		fillWhite();
 		graphicsContext = canvas.getGraphicsContext2D();
 		graphicsContext.setLineWidth(1.0);
+		dots = new DotArray((int) canvas.getWidth(), (int) canvas.getHeight());
+		currentDot = new Dot(0, 0, Color.BLUE, this);
 	}
 
 	//draw when the mouse is just clicked
@@ -110,10 +107,14 @@ public class CanvasController {
 
 	    for (int x = startX; x < endX; x++) {
 	        if (steep){
+	        	if(y < canvas.getWidth() - 1 && x < canvas.getHeight() - 1 && !(x < 0) && !(y < 0)){
 	        		dots.addDot(y, x, currentDot.copy(y, x));
+	        	}
 	        }
 	        else{
+	        	if(x < canvas.getWidth() - 1 && y < canvas.getHeight() - 1 && !(x < 0) && !(y < 0)){
 	        		dots.addDot(x, y, currentDot.copy(x, y));
+	        	}
 	        }
 	        error = error - deltay;
 	        if (error < 0) {
@@ -131,10 +132,9 @@ public class CanvasController {
 		graphicsContext.strokeLine(x + 0.5, y + 0.5, x + 0.5, y + 0.5);
 
 	}
-
-	//might be how the canvas gets its size when it's first initialized
-	public void setCanvasSize(){
-
+	
+	public Canvas getCanvas(){
+		return canvas;
 	}
 
 	//set the background of the canvas to white, eventually
