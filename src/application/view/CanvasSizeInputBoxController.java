@@ -38,8 +38,6 @@ public class CanvasSizeInputBoxController {
 	@FXML
 	public void confirmPressed(){
 		if(checkInput()){
-			heightAndWidth[0] = Integer.parseInt(height.getText());
-			heightAndWidth[1] = Integer.parseInt(width.getText());
 			stage.close();
 		}
 		else{
@@ -69,6 +67,8 @@ public class CanvasSizeInputBoxController {
 			int h = Integer.parseInt(height.getText());
 			int w = Integer.parseInt(width.getText());
 			if(h > 0 && w > 0){
+			heightAndWidth[0] = h;
+			heightAndWidth[1] = w;
 				return true;
 			}
 			return false;

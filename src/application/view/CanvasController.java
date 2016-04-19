@@ -30,7 +30,7 @@ public class CanvasController {
 
 	private DotArray dots;
 
-	private Dot currentDot;
+	private MenuBarWindowController menu;
 
 	private int mouseDragStartX;
 	private int mouseDragEndX;
@@ -41,21 +41,25 @@ public class CanvasController {
 	@FXML
 	public void initialize(){}
 
+	public void setMenu(MenuBarWindowController menu){
+		this.menu = menu;
+	}
+
 	//makes the canvas, pass in width and height //eventually
 	public void createCanvas(int h, int w){
 		canvas.setWidth(w);
 		canvas.setHeight(h);
-		fillWhite();
+
 		graphicsContext = canvas.getGraphicsContext2D();
+		fillWhite();
 		graphicsContext.setLineWidth(1.0);
 		dots = new DotArray((int) canvas.getWidth(), (int) canvas.getHeight());
-		currentDot = new Dot(0, 0, Color.BLUE, this);
 	}
 
 	//draw when the mouse is just clicked
 	@FXML
 	public void mousePressed(MouseEvent event){
-		dots.addDot((int) event.getX(), (int) event.getY(), currentDot.copy((int) event.getX(), (int) event.getY()));
+		dots.addDot((int) event.getX(), (int) event.getY(), menu.getDot().copy((int) event.getX(), (int) event.getY(), this));
 		mouseDragStartX = (int) event.getX();
 		mouseDragStartY = (int) event.getY();
 	}
@@ -107,13 +111,13 @@ public class CanvasController {
 
 	    for (int x = startX; x < endX; x++) {
 	        if (steep){
-	        	if(y < canvas.getWidth() - 1 && x < canvas.getHeight() - 1 && !(x < 0) && !(y < 0)){
-	        		dots.addDot(y, x, currentDot.copy(y, x));
+	        	if(y < canvas.getWidth() && x < canvas.getHeight() && !(x < 0) && !(y < 0)){
+	        		dots.addDot(y, x, menu.getDot().copy(y, x, this));
 	        	}
 	        }
 	        else{
-	        	if(x < canvas.getWidth() - 1 && y < canvas.getHeight() - 1 && !(x < 0) && !(y < 0)){
-	        		dots.addDot(x, y, currentDot.copy(x, y));
+	        	if(x < canvas.getWidth() && y < canvas.getHeight() && !(x < 0) && !(y < 0)){
+	        		dots.addDot(x, y, menu.getDot().copy(x, y, this));
 	        	}
 	        }
 	        error = error - deltay;
@@ -132,14 +136,15 @@ public class CanvasController {
 		graphicsContext.strokeLine(x + 0.5, y + 0.5, x + 0.5, y + 0.5);
 
 	}
-	
+
 	public Canvas getCanvas(){
 		return canvas;
 	}
 
 	//set the background of the canvas to white, eventually
 	public void fillWhite(){
-
+		graphicsContext.setFill(Color.WHITE);
+		graphicsContext.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 	}
 
 }

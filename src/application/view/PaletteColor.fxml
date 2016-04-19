@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane maxHeight="70.0" maxWidth="70.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.view.PaletteColorController">
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <Canvas fx:id="canvas" height="200.0" onMouseClicked="#mousePressed" width="200.0" />
+         </children>
+      </AnchorPane>
+   </center>
+   <top>
+      <MenuBar BorderPane.alignment="CENTER">
+        <menus>
+          <Menu fx:id="editMenu" mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem fx:id="setToSolidColor" mnemonicParsing="false" onAction="#setToSolidColorPressed" text="Edit Solid Color" />
+                  <MenuItem fx:id="setToCyclingColor" mnemonicParsing="false" text="Make Cycling Color" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+   </top>
+   <bottom>
+      <MenuBar BorderPane.alignment="CENTER">
+         <menus>
+            <Menu fx:id="displayCurrent" mnemonicParsing="false" text="- Current -" />
+         </menus>
+      </MenuBar>
+   </bottom>
+</BorderPane>
