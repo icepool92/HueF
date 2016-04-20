@@ -8,18 +8,14 @@ import java.io.IOException;
 import application.Main;
 import application.model.*;
 import javafx.beans.property.IntegerProperty;
-import javafx.event.EventHandler;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.paint.Color;
 
 public class PaletteColorController {
 
@@ -40,6 +36,8 @@ public class PaletteColorController {
 
 	private Dot dot;
 
+	private boolean cycling;
+
 	private GraphicsContext graphicsContext;
 
 	private MenuBarWindowController menuWindow;
@@ -49,13 +47,21 @@ public class PaletteColorController {
 		graphicsContext = canvas.getGraphicsContext2D();
 	}
 
+	public void setFrame(IntegerProperty f){
+		f.addListener((observable, newValue, oldValue) ->{
+			if(cycling){
+				updateColor();
+				fillColor();
+			}
+		});
+	}
+
 	public void setMenuWindow(MenuBarWindowController menuWindow){
 		this.menuWindow = menuWindow;
 	}
 
 	public void setDot(Dot dot){
 		this.dot = dot;
-		dot.setPalette(this);
 		fillColor();
 	}
 
@@ -90,7 +96,12 @@ public class PaletteColorController {
 		}
 		if(color[0] != -1){
 			dot.setColor(color[0], color[1], color[2]);
+			fillColor();
 		}
+	}
+
+	private void updateColor(){
+
 	}
 
 	public Dot getDot(){

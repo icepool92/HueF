@@ -3,17 +3,18 @@ package application.view;
 import java.awt.image.RenderedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 import application.Main;
 import application.model.Dot;
+import javafx.animation.AnimationTimer;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
@@ -45,13 +46,54 @@ public class MenuBarWindowController {
 
 	private CanvasController currentCanvas;
 
-	private ArrayList<Dot> Dots;
-
 	private PaletteColorController currentColor;
+
+	private IntegerProperty frame;
+	private int frameTracker = 0;
+
+	private int[] brushSettings;
 
 	@FXML
 	public void initialize(){
-		Dots = new ArrayList<Dot>();
+		frame = new SimpleIntegerProperty(0);
+		new AnimationTimer() {
+			@Override
+			public void handle(long now){
+				frameTracker++;
+				if(frameTracker == 3){
+					if(frame.intValue() == 1){
+					frame.set(0);
+					}
+					else{
+					frame.set(1);
+					}
+					frameTracker = 0;
+				}
+			}
+		}.start();
+
+		createBrushSelector();
+	}
+
+	public void createBrushSelector(){
+		try{
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(Main.class.getResource("view/BrushSelector.fxml"));
+			BorderPane selector = loader.load();
+
+			Stage brushStage = new Stage();
+			brushStage.setTitle("Brush Settings");
+			brushStage.initModality(Modality.NONE);
+			Scene scene = new Scene(selector);
+			brushStage.setScene(scene);
+
+			brushSettings = ((BrushSelectorController) loader.getController()).getMode();
+
+			brushStage.show();
+		}
+		catch(IOException e){
+			e.printStackTrace();
+		}
 	}
 
 	@FXML
@@ -149,7 +191,8 @@ public class MenuBarWindowController {
 			canvasStage.initModality(Modality.NONE);
 
 			CanvasController controller = loader.getController();
-			controller.createCanvas(h, w);
+			controller.createCanvas(h, w, frame);
+			controller.setBrushSettings(brushSettings);
 			currentCanvas = controller;
 			currentCanvas.setMenu(this);
 

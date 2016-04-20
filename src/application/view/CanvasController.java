@@ -3,8 +3,6 @@ package application.view;
 import javafx.fxml.FXML;
 import application.model.*;
 import javafx.beans.property.IntegerProperty;
-import javafx.event.EventHandler;
-import javafx.stage.Stage;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.MouseEvent;
@@ -37,6 +35,8 @@ public class CanvasController {
 	private int mouseDragStartY;
 	private int mouseDragEndY;
 
+	private int[] brushSettings;
+
 	//happens when the canvas starts
 	@FXML
 	public void initialize(){}
@@ -45,21 +45,25 @@ public class CanvasController {
 		this.menu = menu;
 	}
 
+	public void setBrushSettings(int[] brushSettings){
+		this.brushSettings = brushSettings;
+	}
+
 	//makes the canvas, pass in width and height //eventually
-	public void createCanvas(int h, int w){
+	public void createCanvas(int h, int w, IntegerProperty f){
 		canvas.setWidth(w);
 		canvas.setHeight(h);
 
 		graphicsContext = canvas.getGraphicsContext2D();
 		fillWhite();
 		graphicsContext.setLineWidth(1.0);
-		dots = new DotArray((int) canvas.getWidth(), (int) canvas.getHeight());
+		dots = new DotArray((int) canvas.getWidth(), (int) canvas.getHeight(), this, f);
 	}
 
 	//draw when the mouse is just clicked
 	@FXML
 	public void mousePressed(MouseEvent event){
-		dots.addDot((int) event.getX(), (int) event.getY(), menu.getDot().copy((int) event.getX(), (int) event.getY(), this));
+		draw((int) event.getX(), (int) event.getY());
 		mouseDragStartX = (int) event.getX();
 		mouseDragStartY = (int) event.getY();
 	}
@@ -112,12 +116,12 @@ public class CanvasController {
 	    for (int x = startX; x < endX; x++) {
 	        if (steep){
 	        	if(y < canvas.getWidth() && x < canvas.getHeight() && !(x < 0) && !(y < 0)){
-	        		dots.addDot(y, x, menu.getDot().copy(y, x, this));
+	        		draw(y, x);
 	        	}
 	        }
 	        else{
 	        	if(x < canvas.getWidth() && y < canvas.getHeight() && !(x < 0) && !(y < 0)){
-	        		dots.addDot(x, y, menu.getDot().copy(x, y, this));
+	        		draw(x, y);
 	        	}
 	        }
 	        error = error - deltay;
@@ -128,6 +132,61 @@ public class CanvasController {
 	    }
 	    mouseDragStartX = mouseDragEndX;
 	    mouseDragStartY = mouseDragEndY;
+	}
+
+	public void draw(int x, int y){
+		int b = brushSettings[1];
+		if(brushSettings[0] == 0){
+			for(int i = x - b; i <= x + b; i++){
+				for(int j = y - b; j <= y + b; j++){
+					addDot(i, j);
+				}
+			}
+		}
+		else if(brushSettings[0] == 1){
+			 circle(x, y, b);
+		}
+	}
+
+	public void circle(int y0, int x0, int b){
+		int x, y; // The pixel plotting coordinates
+		int d; // The decision variable, the main focus of this code
+
+		for(int R = 1; R<= b; R++) {
+			// Midpoint algorithm with incremental update of decision variable d
+			x = 0;
+			y = R;
+			d = 5-(R<<2);
+
+
+			while(x<=y) { // Keep going until we cross the line x=y
+				addDot(y0+y,x0+x); // Mirror (x,y) to all eight octants
+				addDot(y0+y, x0-x);
+				addDot(y0-y, x0+x);
+				addDot(y0-y, x0-x);
+				addDot(y0+x, x0+y);
+				addDot(y0+x, x0-y);
+				addDot(y0-x, x0+y);
+				addDot(y0-x, x0-y);
+
+				x = x + 1; // Always take a step to the right
+				if(d>0) {
+						d = d + (x<<3) - (y<<3) + 12; // Update d
+						y = y-1; // Take a step down when needed
+					}
+					else {
+						d = d + (x<<3) + 4; // Update d
+					}
+		    	} // end while
+			}
+	}
+
+	public void addDot(int x, int y){
+		if(x > 0 && x < canvas.getWidth() && y > 0 && y < canvas.getHeight()){
+			if(dots.getDot(x, y) != menu.getDot()){
+				dots.addDot(x, y, menu.getDot());
+			}
+		}
 	}
 
 	//called by a dot to draw on the canvas
