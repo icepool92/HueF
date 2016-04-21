@@ -20,8 +20,8 @@
         <menus>
           <Menu fx:id="editMenu" mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem fx:id="setToSolidColor" mnemonicParsing="false" onAction="#setToSolidColorPressed" text="Edit Solid Color" />
-                  <MenuItem fx:id="setToCyclingColor" mnemonicParsing="false" text="Make Cycling Color" />
+              <MenuItem fx:id="setToSolidColor" mnemonicParsing="false" onAction="#setToSolidColorPressed" text="Set To Solid Color" />
+                  <MenuItem fx:id="setToCyclingColor" mnemonicParsing="false" onAction="#setToCyclingColorPressed" text="Set Tp Cycling Color" />
             </items>
           </Menu>
         </menus>

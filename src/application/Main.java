@@ -2,7 +2,6 @@ package application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
@@ -12,9 +11,7 @@ import java.io.IOException;
 public class Main extends Application{
 
 	private Stage primaryStage;
-	private Stage canvasStage;
 	private AnchorPane menu;
-	private AnchorPane canvas;
 
 	//creates all the windows that the program runs in
 	@Override

@@ -39,7 +39,7 @@
       <AnchorPane BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="Accept" layoutX="184.0" layoutY="6.0" mnemonicParsing="false" onAction="#acceptPressed" text="Accept" />
-            <Button fx:id="Cancel" layoutX="248.0" layoutY="6.0" mnemonicParsing="false" text="Cancel" />
+            <Button fx:id="Cancel" layoutX="248.0" layoutY="6.0" mnemonicParsing="false" onAction="#cancelPressed" text="Cancel" />
          </children>
       </AnchorPane>
    </bottom>

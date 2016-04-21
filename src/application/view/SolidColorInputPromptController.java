@@ -8,32 +8,32 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class SolidColorInputPromptController {
-	
+
 	@FXML
 	private TextField red;
-	
+
 	@FXML
 	private TextField green;
-	
+
 	@FXML
 	private TextField blue;
-	
+
 	@FXML
 	private Button Accept;
-	
+
 	@FXML
 	private Button Cancel;
-	
+
 	private Stage stage;
-	
+
 	int[] color;
-	
+
 	public void initialize(){}
-	
+
 	public void setStage(Stage stage){
 		this.stage = stage;
 	}
-	
+
 	@FXML
 	public void acceptPressed(){
 		if(checkInput()){
@@ -47,11 +47,16 @@ public class SolidColorInputPromptController {
 			alert.showAndWait();
 		}
 	}
-	
+
+	@FXML
+	public void cancelPressed(){
+		stage.close();
+	}
+
 	public void setArray(int[] arr){
 		color = arr;
 	}
-	
+
 	private boolean checkInput(){
 		try{
 			int r = Integer.parseInt(red.getText());

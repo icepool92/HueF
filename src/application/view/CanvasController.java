@@ -17,7 +17,6 @@ public class CanvasController {
 	@FXML
 	private IntegerProperty width;
 
-
 	@FXML
 	private AnchorPane canvasStage;
 
